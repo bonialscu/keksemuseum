@@ -1,6 +1,8 @@
 
 replicaCount: 1
 iamRole: base_application_role
+appName: organizationbase
+appVersion: 0.1.0
 
 container:
   #repository: myrepo/kekseapp        #TODO: provide via commandline param or in app's values.yaml

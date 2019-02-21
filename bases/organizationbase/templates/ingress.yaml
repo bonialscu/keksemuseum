@@ -4,7 +4,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: {{ .Values.ingress.forceSsl | quote }}
     nginx.ingress.kubernetes.io/whitelist-source-range: {{ .Values.ingress.validCidrs | quote }}
-  name: {{ .Chart.Name }}
+  name: {{ .Values.appName }}
 spec:
   rules:
   - host: {{ .Values.ingress.dnsName }}.{{ .Values.ingress.domain }}
@@ -12,5 +12,5 @@ spec:
       paths:
       - path: {{ .Values.ingress.path }}
         backend:
-          serviceName: {{ .Chart.Name }}
+          serviceName: {{ .Values.appName }}
           servicePort: traffic

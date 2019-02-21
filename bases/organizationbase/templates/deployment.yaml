@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Chart.Name }}
+  name: {{ .Values.appName }}
 spec:
   replicas: {{ .Values.replicaCount }}
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: {{ .Chart.Name }}
+      app: {{ .Values.appName }}
   template:
     metadata:
       annotations:
         iam.amazonaws.com/role: {{ .Values.iamRole }}
       labels:
-        app: {{ .Chart.Name }}
+        app: {{ .Values.appName }}
     spec:
       containers:
         - name: app
-          image: {{ .Values.container.repository }}:{{ .Chart.Version }}
+          image: {{ .Values.container.repository }}:{{ .Values.appVersion }}
           imagePullPolicy: {{ .Values.container.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.trafficPort }}

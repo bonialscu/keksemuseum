@@ -2,6 +2,8 @@
 organizationbase:
   replicaCount: 2
   iamRole: k8s-jenkins
+  appName: kekseapp
+  appVersion: "1.0"
   container:
     livenessEndpoint: /actuator/health
     readynessEndpoint: /actuator/health
