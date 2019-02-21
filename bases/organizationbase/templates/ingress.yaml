@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: {{ .Values.ingress.forceSsl | quote }}
+    nginx.ingress.kubernetes.io/whitelist-source-range: {{ .Values.ingress.validCidrs | quote }}
+  name: {{ .Chart.Name }}
+spec:
+  rules:
+  - host: {{ .Values.ingress.dnsName }}.{{ .Values.ingress.domain }}
+    http:
+      paths:
+      - path: {{ .Values.ingress.path }}
+        backend:
+          serviceName: {{ .Chart.Name }}
+          servicePort: traffic

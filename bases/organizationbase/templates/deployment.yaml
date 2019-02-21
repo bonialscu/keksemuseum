@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: {{ .Values.iamRole }}
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+        - name: app
+          image: {{ .Values.container.repository }}:{{ .Chart.Version }}
+          imagePullPolicy: {{ .Values.container.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.trafficPort }}
+              name: traffic
+            - containerPort: {{ .Values.service.healthPort }}
+              name: health
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.container.livenessEndpoint | quote }}
+              port: health
+            initialDelaySeconds: 40
+            timeoutSeconds: 2
+            periodSeconds: 3
+            failureThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.container.readynessEndpoint | quote }}
+              port: health
+            initialDelaySeconds: 40
+            timeoutSeconds: 2
+            periodSeconds: 3
+            failureThreshold: 1
+          resources:
+            limits:
+              cpu: {{ .Values.container.limits.cpu }}
+              memory: {{ .Values.container.limits.memory }}
+            requests:
+              cpu: {{ .Values.container.requests.cpu }}
+              memory: {{ .Values.container.requests.memory }}

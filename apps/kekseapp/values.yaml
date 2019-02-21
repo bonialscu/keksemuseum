@@ -1,0 +1,15 @@
+
+organizationbase:
+  replicaCount: 2
+  iamRole: k8s-jenkins
+  container:
+    livenessEndpoint: /actuator/health
+    readynessEndpoint: /actuator/health
+    limits:
+      cpu: 2000m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
+  ingress:
+    dnsName: kekseapp

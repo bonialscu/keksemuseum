@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  ports:
+    - port: {{ .Values.service.trafficPort }}
+      name: traffic
+      targetPort: {{ .Values.service.trafficPort }}
+  selector:
+    app: {{ .Chart.Name }}
+  type: {{ .Values.service.type }}

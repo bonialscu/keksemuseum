@@ -1,0 +1,27 @@
+
+replicaCount: 1
+iamRole: base_application_role
+
+container:
+  #repository: myrepo/kekseapp        #TODO: provide via commandline param or in app's values.yaml
+  pullPolicy: IfNotPresent
+  livenessEndpoint: /live
+  readynessEndpoint: /ready
+  limits:
+    cpu: 250m
+    memory: 64Mi
+  requests:
+    cpu: 50m
+    memory: 32Mi
+
+service:
+  type: ClusterIP
+  trafficPort: 8080
+  healthPort: 8080
+
+ingress:
+  #dnsDomain: example.com             #TODO: provide via commandline param or in app's values.yaml
+  path: /
+  #dnsName: kekseapp                  #TODO: provide via commandline param or in app's values.yaml
+  forceSsl: true
+  validCidrs: 0.0.0.0/0
