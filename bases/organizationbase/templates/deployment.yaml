@@ -2,10 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
 spec:
   replicas: {{ .Values.replicaCount }}
   strategy:
-    type: Recreate
+    # this configures rolling updates
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: "100%"
   selector:
     matchLabels:
       app: {{ .Values.appName }}
@@ -17,14 +22,16 @@ spec:
         app: {{ .Values.appName }}
     spec:
       containers:
-        - name: app
+        - name: {{ .Values.appName }}
           image: {{ .Values.container.repository }}:{{ .Values.appVersion }}
           imagePullPolicy: {{ .Values.container.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.trafficPort }}
               name: traffic
+              protocol: TCP
             - containerPort: {{ .Values.service.healthPort }}
               name: health
+              protocol: TCP
           livenessProbe:
             httpGet:
               path: {{ .Values.container.livenessEndpoint | quote }}
