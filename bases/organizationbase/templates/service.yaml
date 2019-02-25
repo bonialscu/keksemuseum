@@ -6,6 +6,7 @@ spec:
   ports:
     - port: {{ .Values.service.trafficPort }}
       name: traffic
+      protocol: TCP
       targetPort: {{ .Values.service.trafficPort }}
   selector:
     app: {{ .Values.appName }}

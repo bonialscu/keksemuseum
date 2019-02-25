@@ -27,3 +27,8 @@ ingress:
   #dnsName: kekseapp                  #TODO: provide via commandline param or in app's values.yaml
   forceSsl: true
   validCidrs: 0.0.0.0/0
+
+autoscaling:
+  maxPods: 5
+  minPods: 1
+  cpuTargetPercent: 20

@@ -1,6 +1,8 @@
 
 organizationbase:
   replicaCount: 2
+  autoscaling:
+    maxPods: 15
   iamRole: k8s-jenkins
   appName: kekseapp
   appVersion: "1.0"
