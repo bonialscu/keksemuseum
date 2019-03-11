@@ -28,7 +28,7 @@ spec:
           {{- if .Values.container.pullSecrets }}
           imagePullSecrets:
           {{- range .Values.container.pullSecrets }}
-          - name: {{ . }}
+            - name: {{ . }}
           {{- end }}
           {{- end }}
           ports:
