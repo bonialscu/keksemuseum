@@ -4,10 +4,11 @@ iamRole: base_application_role
 appName: organizationbase
 appVersion: 0.1.0
 
+imagePullSecrets: []
+
 container:
   #repository: myrepo/kekseapp        #TODO: provide via commandline param or in app's values.yaml
   pullPolicy: IfNotPresent
-  pullSecrets: []
   livenessEndpoint: /live
   readynessEndpoint: /ready
   limits:
